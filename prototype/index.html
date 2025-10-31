@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>app-ecole — Prototype MVP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="app">
+    <section id="home" class="page">
+      <h1>app-ecole (Prototype)</h1>
+      <div class="big-buttons">
+        <button id="btn-math" class="big">Mathématiques</button>
+        <button id="btn-german" class="big">Allemand</button>
+      </div>
+    </section>
+
+    <section id="math" class="page hidden">
+      <header>
+        <button id="math-back">← Retour</button>
+        <h2>Mathématiques</h2>
+      </header>
+
+      <div id="math-select">
+        <h3>Choisis un chiffre</h3>
+        <div id="digits" class="grid"></div>
+        <div id="selected" class="selected">Aucun chiffre sélectionné</div>
+        <div class="math-actions">
+          <button id="btn-view-table">Voir la table</button>
+          <button id="btn-training">Entraînement (QCM)</button>
+          <button id="btn-test">Test (10 questions)</button>
+        </div>
+      </div>
+
+      <div id="table-view" class="hidden">
+        <h3>Table de <span id="table-n"></span></h3>
+        <ul id="table-list"></ul>
+        <button id="table-close">Fermer</button>
+      </div>
+
+      <div id="qcm" class="hidden">
+        <h3 id="qcm-title">QCM</h3>
+        <div id="question-area"></div>
+        <div id="qcm-controls"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
