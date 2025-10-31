@@ -3,79 +3,115 @@
 But
 - Fournir un parcours fonctionnel clair et priorisé pour construire l'application "app-ecole" du point de vue utilisateur et pédagogique. Ce document décrit "quoi" construire et dans quel ordre; les détails techniques viendront après.
 
-MVP (priorité 1)
-- Page d'accueil : choix de la matière (Mathématiques / Allemand).
-- Mathématiques — Entraînement par table : choisir un chiffre (2–9), afficher la table complète et proposer des QCM simples.
-- Mathématiques — Test rapide : session de 10 questions sur le chiffre choisi, score et feedback immédiat.
-- Sauvegarde locale du score (pour affichage du taux de réussite simple).
-
-Étape 1 — Définir les parcours utilisateur
-1.1. Accueil
- - L'enfant choisit une matière. Interface simple, grandes cibles tactiles.
-1.2. Entraînement (Math)
- - Sélection d'un chiffre (2–9).
- - Option : voir la table complète (ex. 4×1..4×10).
- - Option : lancer une série de QCM (nombre configurable, p.ex. 10).
-1.3. Test (Math)
- - 10 questions générées aléatoirement basées sur le chiffre choisi.
- - À la fin, afficher score (ex. 7/10) et explication courte pour chaque erreur.
-1.4. Problèmes (Math)
- - Petits problèmes textuels (FR/DE) où l'enfant écrit la réponse.
- - Correction et affichage d'une explication simple.
-
-Étape 2 — Expérience Allemand (phase 1)
-2.1. Vocabulaire
- - Catégories : École, Maison, Cuisine, Transport.
- - Pour chaque mot : image + mot en allemand (article + nom). Interface d'apprentissage et QCM d'identification d'image.
-2.2. Histoires courtes
- - Textes courts avec 2–3 questions de compréhension.
-
-Étape 3 — Progression et suivi
-3.1. Sauvegarde des sessions
- - Enregistrer date, matière, type d'exercice, score.
-3.2. Tableau de progression
- - Vue simple montrant taux de réussite par table (ex. Table de 4 : 85%).
- - Historique récent et meilleur score.
-
-Étape 4 — Améliorations UX (après MVP)
-- Ajouter corrections visuelles (animations, icônes de réussite/erreur).
-- Mode enfant : police plus grande, couleurs, sons (optionnels).
-- Accessibilité : navigation clavier, contrastes.
-
-Étape 5 — Contenu et i18n
-- Préparer tout le contenu textuel en FR/DE dès le départ : questions, énoncés de problèmes, labels UI.
-- Stocker les packs de contenus (vocabulaire, problèmes) séparément pour faciliter ajout ultérieur.
-
-Étape 6 — Tableaux de bord et insights pédagogiques
-- Afficher par élève (ou appareil) : progression par table, taux moyen, tables les plus faibles.
-- Indicateurs simples : temps moyen par question, questions les plus souvent ratées.
-
-Livrables par jalon (sprint) — proposition
-- Sprint 1 (MVP core, 1–2 semaines) : Accueil, Entraînement Math (voir table + QCM), Test Math 10 questions, sauvegarde locale des scores.
-- Sprint 2 (1 semaine) : Problèmes texte + corrections, premier tableau de progression basique.
-- Sprint 3 (1–2 semaines) : Allemand vocabulaire (images + QCM) et histoires simples.
-- Sprint 4 (1 semaine) : UX polish, animations, accessibilité, réglages i18n.
-
-Critères d'acceptation (exemples)
-- Une session Test Math renvoie un score et conserve l'historique localement.
-- Un QCM présente 1 question à la fois, accepte 1 réponse, et indique correction immédiate.
-- Le tableau de progression liste au moins les 5 dernières sessions et calcule un pourcentage de réussite.
-
-Risques et décisions à prendre
-- Mode de stockage initial : local (localStorage) vs IndexedDB (pour scale/complexité). Choix à faire au moment du développement.
-- Prioriser accessibilité et écran tablette dès le début si l'app cible tablettes Android.
-
 Prochaine étape pour l'agent
-- Confirmez le périmètre du MVP (les items listés dans "MVP" ci-dessus). Une fois validé, je traduis chaque étape fonctionnelle en tâches techniques et je peux scaffolder le squelette initial.
+- Validez le périmètre du MVP (items listés dans "MVP"). Après validation, chaque tâche ci-dessous sera créée comme issue et on travaillera par branches courtes.
 
----
-Donnez-moi vos retours : voulez-vous réduire ou étendre le MVP ? Souhaitez-vous que l'on commence par Math uniquement (phase 1) ou lancer Math+Allemand dès le premier sprint ?
+Découpage fin (tâches incrémentales testables après chaque étape)
 
----
-Tâches découpées (version actionnable)
+Sprint 1 — MVP core (livrable testable après chaque micro-tâche)
 
-Sprint 1 — MVP core (Entraînement + Test Math)
-- T1.1 Créer la branche `feat/mvp-math`.
+T1.0 Préparation
+- Créer branche: `feat/mvp-math/00-prepare`.
+- Livrable testable: branche créée.
+
+T1.1 Scaffolding minimal & page d'accueil
+- Objectif: que l'application se lance et affiche une page d'accueil simple.
+- Actions:
+	- Créer une application minimale (ou scaffold) avec une page `/` contenant deux gros boutons: "Mathématiques" et "Allemand".
+	- Rendre la page accessible via serveur de dev.
+- Livrable testable: lancer le serveur dev et voir la page d'accueil (commande fournie dans la tâche technique).
+	- Test manuel: démarrer le serveur, ouvrir `http://localhost:4200/` et vérifier que les deux boutons apparaissent.
+
+T1.2 Navigation vers page Math
+- Objectif: naviguer de l'accueil vers `/math`.
+- Actions:
+	- Ajouter route `/math` et une page placeholder "Mathématiques".
+- Livrable testable: en cliquant sur "Mathématiques" on arrive sur `/math` et voit le placeholder.
+
+T1.3 UI - Choix d'un chiffre (2..9)
+- Objectif: permettre la sélection d'un chiffre pour la session.
+- Actions:
+	- Sur `/math`, afficher grille 2..9. Chaque case est cliquable et met à jour l'état local (session).
+- Livrable testable: choisir un chiffre et afficher le chiffre sélectionné quelque part sur la page.
+
+T1.4 Voir table complète
+- Objectif: afficher la table 1..10 pour le chiffre sélectionné.
+- Actions:
+	- Ajouter un bouton "Voir la table" qui ouvre une vue listant `n x 1..10`.
+- Livrable testable: bouton visible, clic affiche la table correctement.
+
+T1.5 QCM d'entraînement (1 question) — pipeline minimal
+- Objectif: implémenter le moteur QCM minimal pour 1 question (puis étendre à 10).
+- Actions:
+	- Créer un composant `QuestionCard` qui affiche une question, plusieurs choix et indique si la réponse est correcte.
+	- Implémenter un générateur simple qui produit une question de multiplication pour le chiffre sélectionné.
+- Livrable testable: démarrer une session d'entraînement avec 1 question; répondre et voir feedback immédiat.
+
+T1.6 QCM d'entraînement (10 questions)
+- Objectif: boucle de 10 questions avec score final.
+- Actions:
+	- Étendre le pipeline pour enchaîner 10 questions et afficher le score à la fin.
+- Livrable testable: compléter 10 questions et voir un écran récapitulatif avec score.
+
+T1.7 Test (10 questions aléatoires)
+- Objectif: session test indépendante (questions aléatoires autour du chiffre sélectionné).
+- Actions:
+	- Implémenter génération aléatoire et écran de test séparé.
+- Livrable testable: lancer "Test" et obtenir 10 questions différentes; terminer affiche le score.
+
+T1.8 Sauvegarde locale (session unique)
+- Objectif: enregistrer la session finale (date, type, chiffre, score) dans le stockage local.
+- Actions:
+	- Sauvegarder au format JSON en `localStorage`.
+- Livrable testable: après une session, ouvrir l'écran "Progression" et voir la session enregistrée.
+
+Sprint 2 — Améliorations (chaque tâche testable)
+
+T2.1 Problèmes texte (1 problème)
+- Objectif: proposer un problème textuel simple, saisir la réponse et corriger.
+- Livrable testable: résoudre le problème et voir correction + explication.
+
+T2.2 Historique / Progression
+- Objectif: afficher la liste des sessions sauvegardées et un taux basique par chiffre.
+- Livrable testable: écran Progression listant sessions et pourcentage de réussite par table.
+
+T2.3 Export/Import JSON (optionnel)
+- Objectif: pouvoir exporter l'historique et le réimporter sur un autre appareil.
+- Livrable testable: exporter un fichier JSON et le réimporter, vérifier que les sessions apparaissent.
+
+Sprint 3 — Allemand (démarrage par micro-tâches)
+
+T3.1 Catalogue minimal (10 mots pour "Maison")
+- Livrable testable: page vocabulaire affichant la liste de 10 images/mots.
+
+T3.2 QCM image → mot (1 question)
+- Livrable testable: lancer QCM pour 1 question d'image et obtenir feedback.
+
+T3.3 Répéter pour 10 questions
+- Livrable testable: session de 10 questions vocabulaire avec score.
+
+Sprint 4 — i18n et histoires
+
+T4.1 Préparer fichiers FR/DE pour les contenus dynamiques
+- Livrable testable: basculer la langue dans l'UI et voir les contenus changer.
+
+T4.2 Ajouter 3 histoires courtes + 2 questions chacune
+- Livrable testable: lire histoire et répondre aux 2 questions; réponses évaluées.
+
+Sprint 5 — UX / Accessibilité / Polish
+
+T5.1 Polissage visuel (couleurs, taille, icônes)
+- Livrable testable: interface plus lisible et adaptée tablette.
+
+T5.2 Accessibilité basique
+- Livrable testable: vérifier navigation clavier, labels et contrastes.
+
+Processus de validation à la fin de chaque tâche
+- Chaque tâche doit avoir une issue et une branche dédiée (`feat/<sprint>-<T#>`).
+- Faire un petit commit, ouvrir une PR vers `main` avec la description et les étapes de test manuel.
+
+Proposition suivante
+- Je peux automatiser la création d'issues GitHub pour T1.0..T1.8 et créer la branche `feat/mvp-math/00-prepare`. Souhaitez-vous que je fasse cela maintenant ?
 	- Critère: branche créée sur le repo.
 - T1.2 Écran Accueil
 	- Créer page avec deux gros boutons: "Mathématiques", "Allemand".
