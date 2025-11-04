@@ -1,0 +1,41 @@
+# Angular build artifacts
+angular-app/dist/
+angular-app/tmp/
+angular-app/out-tsc/
+angular-app/bazel-out/
+angular-app/.angular/cache/
+
+# Node dependencies
+angular-app/node_modules/
+node_modules/
+
+# Coverage and test reports
+angular-app/coverage/
+
+# Miscellaneous Angular CLI scratch files
+angular-app/.sass-cache/
+angular-app/connect.lock
+angular-app/libpeerconnection.log
+angular-app/npm-debug.log*
+angular-app/yarn-error.log*
+angular-app/testem.log
+angular-app/typings/
+
+# Editor and IDE settings
+angular-app/.idea/
+angular-app/.project
+angular-app/.classpath
+angular-app/.c9/
+angular-app/*.launch
+angular-app/.settings/
+angular-app/*.sublime-workspace
+angular-app/.vscode/*
+!angular-app/.vscode/settings.json
+!angular-app/.vscode/tasks.json
+!angular-app/.vscode/launch.json
+!angular-app/.vscode/extensions.json
+angular-app/.vscode-test
+
+# OS generated files
+.DS_Store
+Thumbs.db
